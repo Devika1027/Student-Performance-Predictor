@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <h1>Single Student Details</h1>
+        <table border = "1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Course</th>
+                <th>Email</th>
+                <th>Attendance</th>
+                <th>Series Marks</th>
+            </tr>
+        </thead>
+        <tbody>                   
+            <tr>
+                <td>{{singlestudent.name}}</td>
+                <td>{{singlestudent.address}}</td>
+                <td>{{singlestudent.course}}</td>
+                <td>{{singlestudent.email}}</td>
+                <td>{{singlestudent.attendance}}</td>
+                <td>{{singlestudent.marks}}</td>
+            </tr>        
+        </tbody>
+        </table>    
+        <form method="post" action="{% url 'home' %}" class="form">
+            {% csrf_token %}
+            <input type="submit" value="Log Out" class="btn">
+        </form>
+    </body>
+</html>        

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Courier, sans-serif;
+            background-image: url('https://t4.ftcdn.net/jpg/06/81/51/73/360_F_681517376_U620j6JDLjXtsbwx1GIsOX6eWFch8SlP.jpg');
+            background-size: cover
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        form input[type="email"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 style="text-align: center; color: #fff;">Home Page</h1>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+           <br><input type="submit" value="Faculty Login"></br>
+        </form>
+        <form method="post" action="{% url 'stlogin' %}">
+            {% csrf_token %}
+           <br><input type="submit" value="Student Login"></br>
+        </form>
+    </div>
+</body>
+</html>

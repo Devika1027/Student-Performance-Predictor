@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student List</title>
+    <style>
+        .edit-input {
+            border: none;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Course</th>
+                <th>Email</th>
+                <th>Attendance</th>
+                <th>Series Marks</th>
+                <th>Details</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>                   
+            {% for stud in allstudents %}
+                <tr id="row_{{ stud.pk }}">
+                    <td id="name_{{ stud.pk }}">{{ stud.name }}</td>
+                    <td id="address_{{ stud.pk }}">{{ stud.address }}</td>
+                    <td id="course_{{ stud.pk }}">{{ stud.course }}</td>
+                    <td id="email_{{ stud.pk }}">{{ stud.email }}</td>
+                    <td id="attendance_{{ stud.pk }}">{{ stud.attendance }}</td>
+                    <td id="marks_{{ stud.pk }}">{{ stud.marks }}</td>
+                    <td><a href="{% url 'getsinglestudent' stud.pk %}">View</a></td>
+                    <td><button onclick="editStudent({{ stud.pk }})">Edit</button></td>
+                    <td>
+                        <form method="post" action="{% url 'deletestudent' stud.pk %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>        
+            {% endfor %}
+        </tbody>
+    </table>  
+
+    <script>
+        function editStudent(student_id) {
+            var name = document.getElementById("name_" + student_id).innerText;
+            var address = document.getElementById("address_" + student_id).innerText;
+            var course = document.getElementById("course_" + student_id).innerText;
+            var email = document.getElementById("email_" + student_id).innerText;
+            var attendance = document.getElementById("attendance_" + student_id).innerText;
+            var marks = document.getElementById("marks_" + student_id).innerText;
+
+            document.getElementById("name_" + student_id).innerHTML = "<input class='edit-input' type='text' value='" + name + "' id='edit_name_" + student_id + "'>";
+            document.getElementById("address_" + student_id).innerHTML = "<input class='edit-input' type='text' value='" + address + "' id='edit_address_" + student_id + "'>";
+            document.getElementById("course_" + student_id).innerHTML = "<input class='edit-input' type='text' value='" + course + "' id='edit_course_" + student_id + "'>";
+            document.getElementById("email_" + student_id).innerHTML = "<input class='edit-input' type='text' value='" + email + "' id='edit_email_" + student_id + "'>";
+            document.getElementById("attendance_" + student_id).innerHTML = "<input class='edit-input' type='text' value='" + attendance + "' id='edit_attendance_" + student_id + "'>";
+            document.getElementById("marks_" + student_id).innerHTML = "<input class='edit-input' type='text' value='" + marks + "' id='edit_marks_" + student_id + "'>";
+
+            // Change the "Edit" button to "Save"
+            var editButton = document.querySelector("#row_" + student_id + " button");
+            editButton.innerHTML = "Save";
+            editButton.setAttribute("onclick", "saveStudent(" + student_id + ")");
+        }
+
+        function saveStudent(student_id) {
+            var newName = document.getElementById("edit_name_" + student_id).value;
+            var newAddress = document.getElementById("edit_address_" + student_id).value;
+            var newCourse = document.getElementById("edit_course_" + student_id).value;
+            var newEmail = document.getElementById("edit_email_" + student_id).value;
+            var newAttendance = document.getElementById("edit_attendance_" + student_id).value;
+            var newMarks = document.getElementById("edit_marks_" + student_id).value;
+
+            // Update the table data with new values
+            document.getElementById("name_" + student_id).innerText = newName;
+            document.getElementById("address_" + student_id).innerText = newAddress;
+            document.getElementById("course_" + student_id).innerText = newCourse;
+            document.getElementById("email_" + student_id).innerText = newEmail;
+            document.getElementById("attendance_" + student_id).innerText = newAttendance;
+            document.getElementById("marks_" + student_id).innerText = newMarks;
+
+            // Change the "Save" button back to "Edit"
+            var saveButton = document.querySelector("#row_" + student_id + " button");
+            saveButton.innerHTML = "Edit";
+            saveButton.setAttribute("onclick", "editStudent(" + student_id + ")");
+        }
+    </script>
+    <td>
+        <form method="post" action="{% url 'adduser' %}">
+        {% csrf_token %}
+        <input type="submit" value="Addstudent">
+        </form>
+    <td>
+        <td>
+            <form method="post" action="{% url 'about' %}">
+            {% csrf_token %}
+            <br><input type="submit" value="Faculty Profile"></br>
+            </form>
+        <td>    
+            <form method="post" action="{% url 'home' %}" class="form">
+                {% csrf_token %}
+                <br><input type="submit" value="Log Out" class="btn"></br>
+            </form>
+</body>
+</html>
